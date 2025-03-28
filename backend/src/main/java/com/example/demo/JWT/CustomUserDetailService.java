@@ -16,11 +16,10 @@ public class CustomUserDetailService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println("loadUser");
-        String name = "name";
         String pw = "pw";
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-        User user = new User(name, pw, authorities);
+        User user = new User(username, pw, authorities);
         return user;
     }
 }
