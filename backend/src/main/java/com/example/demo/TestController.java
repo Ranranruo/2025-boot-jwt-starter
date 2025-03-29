@@ -21,9 +21,9 @@ public class TestController {
     @GetMapping("/test")
     public Member test1() {
         Optional<Member> member = memberRepository.findById(1L);
-        if(member.isPresent()) {
-            return member.get();
+        if(member.isEmpty()) {
+            return null;
         }
-        return null;
+        return member.get();
     }
 }

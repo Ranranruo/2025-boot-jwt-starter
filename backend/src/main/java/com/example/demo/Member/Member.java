@@ -1,12 +1,16 @@
 package com.example.demo.Member;
 
+import com.example.demo.Bridge.MemberRoleBridge;
 import com.example.demo.Role.Role;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -15,6 +19,7 @@ import java.util.Set;
 @Setter
 public class Member {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -30,11 +35,7 @@ public class Member {
     @Column(name = "password")
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "Member_Role_Bridge",
-            joinColumns = @JoinColumn(name = "member_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<Role> roles = new HashSet<>();
+    @OneToMany(mappedBy = "member")
+    @JsonIgnoreProperties("member")
+    private Set<MemberRoleBridge> roles = new HashSet<>();
 }
