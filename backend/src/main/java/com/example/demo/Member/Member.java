@@ -1,17 +1,9 @@
 package com.example.demo.Member;
 
-import com.example.demo.Bridge.MemberRoleBridge;
-import com.example.demo.Role.Role;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "Member")
@@ -34,8 +26,4 @@ public class Member {
 
     @Column(name = "password")
     private String password;
-
-    @OneToMany(mappedBy = "member")
-    @JsonIgnoreProperties("member")
-    private Set<MemberRoleBridge> roles = new HashSet<>();
 }
