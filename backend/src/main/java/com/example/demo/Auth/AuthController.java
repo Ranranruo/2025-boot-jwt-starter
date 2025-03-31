@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
     @PostMapping("/sign-up")
     public ResponseEntity<ApiResponse> signUp() {
-        
+        return ApiResponse.ok();
     }
 }

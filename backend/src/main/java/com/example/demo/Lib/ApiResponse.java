@@ -4,6 +4,7 @@ import com.example.demo.Enum.ApiStatus;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 public class ApiResponse<T> {
@@ -21,12 +22,12 @@ public class ApiResponse<T> {
         this.data = data;
     }
 
-    public static ResponseEntity<ApiResponse<Object>> ok() {
-        return ResponseEntity.ok(new ApiResponse<Object>(true, "요청이 성공적으로 처리되었습니다."));
+    public static ResponseEntity<ApiResponse> ok() {
+        return ResponseEntity.ok(new ApiResponse(true, ApiStatus.SUCCESS.getMessage()));
     }
 
     public static <T> ResponseEntity<ApiResponse<T>> ok(T data) {
-        return ResponseEntity.ok(new ApiResponse<T>(true, "요청이 성공적으로 처리되었습니다.", data));
+        return ResponseEntity.ok(new ApiResponse<T>(true, ApiStatus.SUCCESS.getMessage(), data));
     }
 
     public static <T> ResponseEntity<ApiResponse<T>> ok(T data, String message) {
