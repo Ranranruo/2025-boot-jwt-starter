@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface MemberRepository extends JpaRepository<Member, Long> {
     @Query(value = "SELECT m FROM Member m WHERE m.username = :username")
     public Member findByUsername(@Param("username") String username);
+
+    boolean existsMemberByUsername(String username);
 }
