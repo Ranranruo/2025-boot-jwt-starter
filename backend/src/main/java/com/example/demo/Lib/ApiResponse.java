@@ -1,6 +1,5 @@
 package com.example.demo.Lib;
 
-import com.example.demo.Enum.ApiStatus;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 
 public class ApiResponse<T> {
     private final boolean success;
+    private final HttpStatus status;
     private final String message;
     private final T data;
 
@@ -23,7 +23,7 @@ public class ApiResponse<T> {
     }
 
     public static ResponseEntity<ApiResponse> ok() {
-        return ResponseEntity.ok(new ApiResponse(true, ApiStatus.SUCCESS.getMessage()));
+        return ResponseEntity.ok(new ApiResponse(true, H.SUCCESS.getMessage()));
     }
 
     public static <T> ResponseEntity<ApiResponse<T>> ok(T data) {

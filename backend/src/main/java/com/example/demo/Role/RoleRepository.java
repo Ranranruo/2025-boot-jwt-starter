@@ -24,4 +24,14 @@ public interface RoleRepository extends JpaRepository<Role, Short> {
         m.id = :id
     """, nativeQuery = true)
     public Set<Role> findAllByMemberId(@Param("id") Long id);
+
+    @Query(value = """
+    SELECT
+        *
+    FROM
+        Role
+    WHERE
+        name = :name
+    """, nativeQuery = true)
+    public Role findByName(@Param("name") String name);
 }
