@@ -7,25 +7,25 @@ import lombok.*;
 public class SignUpDTO implements DTO{
     private final String username;
     private final String password;
-    private final String displayname;
+    private final String displayName;
     private final String email;
 
-    SignUpDTO(String username, String password, String displayname, String email) {
+    SignUpDTO(String username, String password, String displayName, String email) {
         this.username = username;
         this.password = password;
-        this.displayname = displayname;
+        this.displayName = displayName;
         this.email = email;
     }
-    SignUpDTO(String username, String password, String displayname) {
+    SignUpDTO(String username, String password, String displayName) {
         this.username = username;
         this.password = password;
-        this.displayname = displayname;
+        this.displayName = displayName;
         this.email = null;
     }
 
     @Override
     public boolean isValid() {
-        if(this.username == null | this.password == null | this.displayname == null){
+        if(this.username == null | this.password == null | this.displayName == null){
             return false;
         }
         return true;

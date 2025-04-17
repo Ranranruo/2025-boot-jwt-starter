@@ -23,8 +23,8 @@ public class Member {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "displayname")
-    private String displayname;
+    @Column(name = "display_name")
+    private String displayName;
 
     @Column(name = "password")
     private String password;

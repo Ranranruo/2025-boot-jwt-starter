@@ -1,5 +1,6 @@
 package com.example.demo.Auth;
 
+import com.example.demo.Auth.Exception.UsernameAlreadyExistsException;
 import com.example.demo.DTO.SignUpDTO;
 import com.example.demo.Member.Member;
 import com.example.demo.Member.MemberRepository;
@@ -15,15 +16,17 @@ public class AuthService {
     RoleRepository roleRepository;
     MemberRoleBridgeRepository memberRoleBridgeRepository;
     public boolean signUp(SignUpDTO signUpDTO) {
+        boolean isExists = memberRepository.existsMemberByUsername(signUpDTO.getUsername());
+
+        if(isExists) throw new UsernameAlreadyExistsException();
         Member member = Member.builder()
                 .username(signUpDTO.getUsername())
                 .password(signUpDTO.getPassword())
                 .email(signUpDTO.getEmail())
-                .displayname(signUpDTO.getDisplayname())
+                .displayName(signUpDTO.getDisplayName())
                 .build();
         Role role = roleRepository.findByName("MEMBER");
-
-        memberRepository.save(member);
+//        memberRepository.save(member);
 
         Long memberId = member.getId();
         Long roleId = role.getId();
@@ -33,7 +36,7 @@ public class AuthService {
                 .roleId(roleId)
                 .build();
 
-        memberRoleBridgeRepository.save(memberRoleBridge);
+//        memberRoleBridgeRepository.save(memberRoleBridge);
         return true;
     }
 }
