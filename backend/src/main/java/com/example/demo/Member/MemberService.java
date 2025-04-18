@@ -1,6 +1,6 @@
 package com.example.demo.Member;
 
-import com.example.demo.DTO.SignUpDTO;
+import com.example.demo.Auth.DTO.SignUpRequestDTO;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 public class MemberService {
     private final MemberRepository memberRepository;
 
-    public boolean SignUp(SignUpDTO signUpDTO) {
+    public boolean SignUp(SignUpRequestDTO signUpRequestDTO) {
 
-        boolean isExistsUsername = memberRepository.existsMemberByUsername(signUpDTO.getUsername());
+        boolean isExistsUsername = memberRepository.existsMemberByUsername(signUpRequestDTO.getUsername());
         if(isExistsUsername) {
 //            return
         }

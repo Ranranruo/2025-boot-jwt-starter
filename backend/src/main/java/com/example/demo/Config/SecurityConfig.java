@@ -1,7 +1,7 @@
 package com.example.demo.Config;
 
 import com.example.demo.JWT.CustomFilter;
-import com.example.demo.JWT.LoginFilter;
+// import com.example.demo.JWT.LoginFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -31,8 +31,8 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth->auth.requestMatchers("/**").permitAll())
-                .addFilterAt(new LoginFilter(authenticationConfiguration.getAuthenticationManager()), UsernamePasswordAuthenticationFilter.class)
-                .addFilterAfter(new CustomFilter(), FilterSecurityInterceptor.class)
+//                .addFilterAt(new LoginFilter(authenticationConfiguration.getAuthenticationManager()), UsernamePasswordAuthenticationFilter.class)
+//                .addFilterAfter(new CustomFilter(), FilterSecurityInterceptor.class)
                 .build();
     }
     @Bean
