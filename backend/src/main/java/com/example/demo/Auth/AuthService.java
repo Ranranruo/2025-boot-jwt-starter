@@ -1,13 +1,13 @@
 package com.example.demo.Auth;
 
-import com.example.demo.Auth.Exception.UsernameAlreadyExistsException;
+import com.example.demo.Auth.Security.Exception.UsernameAlreadyExistsException;
 import com.example.demo.Auth.DTO.SignUpRequestDTO;
-import com.example.demo.Member.Member;
-import com.example.demo.Member.MemberRepository;
-import com.example.demo.MemberRoleBridge.MemberRoleBridge;
-import com.example.demo.MemberRoleBridge.MemberRoleBridgeRepository;
-import com.example.demo.Role.Role;
-import com.example.demo.Role.RoleRepository;
+import com.example.demo.Domain.Member.Member;
+import com.example.demo.Domain.Member.MemberRepository;
+import com.example.demo.Domain.MemberRoleBridge.MemberRoleBridge;
+import com.example.demo.Domain.MemberRoleBridge.MemberRoleBridgeRepository;
+import com.example.demo.Domain.Role.Role;
+import com.example.demo.Domain.Role.RoleRepository;
 import org.springframework.stereotype.Service;
 
 @Service

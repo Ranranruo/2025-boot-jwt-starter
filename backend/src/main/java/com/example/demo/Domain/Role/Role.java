@@ -1,4 +1,4 @@
-package com.example.demo.Role;
+package com.example.demo.Domain.Role;
 
 import jakarta.persistence.*;
 import lombok.*;

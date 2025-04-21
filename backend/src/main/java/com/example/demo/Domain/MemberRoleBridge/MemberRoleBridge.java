@@ -1,4 +1,4 @@
-package com.example.demo.MemberRoleBridge;
+package com.example.demo.Domain.MemberRoleBridge;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

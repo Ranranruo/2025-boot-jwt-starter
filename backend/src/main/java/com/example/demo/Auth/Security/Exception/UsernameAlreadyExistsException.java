@@ -1,4 +1,4 @@
-package com.example.demo.Auth.Exception;
+package com.example.demo.Auth.Security.Exception;
 
 public class UsernameAlreadyExistsException extends RuntimeException{
     public UsernameAlreadyExistsException() {

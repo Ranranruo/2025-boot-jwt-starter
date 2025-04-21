@@ -1,4 +1,4 @@
-package com.example.demo.Role;
+package com.example.demo.Domain.Role;
 
 import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
