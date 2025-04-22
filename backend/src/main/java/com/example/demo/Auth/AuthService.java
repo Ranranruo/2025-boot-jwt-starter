@@ -8,13 +8,15 @@ import com.example.demo.Domain.MemberRoleBridge.MemberRoleBridge;
 import com.example.demo.Domain.MemberRoleBridge.MemberRoleBridgeRepository;
 import com.example.demo.Domain.Role.Role;
 import com.example.demo.Domain.Role.RoleRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class AuthService {
-    MemberRepository memberRepository;
-    RoleRepository roleRepository;
-    MemberRoleBridgeRepository memberRoleBridgeRepository;
+    private final MemberRepository memberRepository;
+    private final RoleRepository roleRepository;
+    private final MemberRoleBridgeRepository memberRoleBridgeRepository;
 
     public boolean signUp(SignUpRequestDTO signUpRequestDTO) {
         boolean isExists = memberRepository.existsMemberByUsername(signUpRequestDTO.getUsername());
@@ -25,16 +27,16 @@ public class AuthService {
                 .email(signUpRequestDTO.getEmail())
                 .displayName(signUpRequestDTO.getDisplayName())
                 .build();
-        Role role = roleRepository.findByName("MEMBER");
+//        Role role = roleRepository.findByName("MEMBER");
 //        memberRepository.save(member);
 
-        Long memberId = member.getId();
-        Long roleId = role.getId();
+//        Long memberId = member.getId();
+//        Long roleId = role.getId();
 
-        MemberRoleBridge memberRoleBridge = MemberRoleBridge.builder()
-                .memberId(memberId)
-                .roleId(roleId)
-                .build();
+//        MemberRoleBridge memberRoleBridge = MemberRoleBridge.builder()
+//                .memberId(memberId)
+//                .roleId(roleId)
+//                .build();
 
 //        memberRoleBridgeRepository.save(memberRoleBridge);
         return true;

@@ -28,10 +28,6 @@ public class AuthValidator {
         String password = signUpRequestDTO.getPassword();
         String email = signUpRequestDTO.getEmail();
 
-        boolean isUsernameValid = false;
-        boolean isDisplayNameValid = false;
-        boolean isPasswordValid = false;
-        boolean isEmailValid = false;
 
         if(username.isBlank()) {
             signUpResponseDTO.setUsername(ValidationStatus.EMPTY.getMessage());
@@ -43,7 +39,6 @@ public class AuthValidator {
             signUpResponseDTO.setUsername(ValidationStatus.INVALID.getMessage());
         } else {
             signUpResponseDTO.setUsername(ValidationStatus.SUCCESS.getMessage());
-            isUsernameValid = true;
         }
 
         if(displayName.isBlank()) {
@@ -56,7 +51,6 @@ public class AuthValidator {
             signUpResponseDTO.setDisplayName(ValidationStatus.INVALID.getMessage());
         } else {
             signUpResponseDTO.setDisplayName(ValidationStatus.SUCCESS.getMessage());
-            isDisplayNameValid = true;
         }
 
         if(password.isBlank()) {
@@ -69,17 +63,14 @@ public class AuthValidator {
             signUpResponseDTO.setPassword(ValidationStatus.INVALID.getMessage());
         } else {
             signUpResponseDTO.setPassword(ValidationStatus.SUCCESS.getMessage());
-            isPasswordValid = true;
         }
 
-        if(!email.matches(this.EMAIL_REGEX)) {
+        if(email != null && !email.matches(this.EMAIL_REGEX)) {
             signUpResponseDTO.setEmail(ValidationStatus.INVALID.getMessage());
         } else {
             signUpResponseDTO.setEmail(ValidationStatus.SUCCESS.getMessage());
-            isEmailValid = true;
         }
 
-        signUpResponseDTO.setSuccess(isUsernameValid && isDisplayNameValid && isPasswordValid && isEmailValid);
 
         return signUpResponseDTO;
     }

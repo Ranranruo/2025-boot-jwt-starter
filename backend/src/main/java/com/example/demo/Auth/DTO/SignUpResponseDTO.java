@@ -10,7 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SignUpResponseDTO {
-    private boolean success = false;
     private String username;
     private String displayName;
     private String password;
