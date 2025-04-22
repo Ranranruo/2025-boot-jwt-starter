@@ -14,4 +14,11 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     )
     """, nativeQuery = true)
     boolean existsMemberByUsername(String username);
+
+    @Query(value = """
+    SELECT EXISTS(
+        SELECT 1 FROM Member WHERE email = :email
+    )
+    """, nativeQuery = true)
+    boolean existsMemberByEmail(String email);
 }

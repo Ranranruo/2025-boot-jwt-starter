@@ -7,12 +7,8 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 public class SignUpRequestDTO {
-
     private final String username;
-
     private final String displayName;
-
     private final String password;
-
     private final String email;
 }

@@ -1,12 +1,11 @@
 package com.example.demo.Auth;
 
-import com.example.demo.Auth.Security.Exception.UsernameAlreadyExistsException;
+import com.example.demo.Auth.DTO.SignUpResponseDTO;
+import com.example.demo.Auth.Security.Exception.ExistsSignUpRequestException;
 import com.example.demo.Auth.DTO.SignUpRequestDTO;
 import com.example.demo.Domain.Member.Member;
 import com.example.demo.Domain.Member.MemberRepository;
-import com.example.demo.Domain.MemberRoleBridge.MemberRoleBridge;
 import com.example.demo.Domain.MemberRoleBridge.MemberRoleBridgeRepository;
-import com.example.demo.Domain.Role.Role;
 import com.example.demo.Domain.Role.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,8 +18,16 @@ public class AuthService {
     private final MemberRoleBridgeRepository memberRoleBridgeRepository;
 
     public boolean signUp(SignUpRequestDTO signUpRequestDTO) {
-        boolean isExists = memberRepository.existsMemberByUsername(signUpRequestDTO.getUsername());
-        if(isExists) throw new UsernameAlreadyExistsException();
+        boolean isUsernameTaken = memberRepository.existsMemberByUsername(signUpRequestDTO.getUsername());
+        boolean isEmailTaken = memberRepository.existsMemberByEmail(signUpRequestDTO.getEmail());
+
+        if(isUsernameTaken || isEmailTaken) {
+            SignUpResponseDTO response = new SignUpResponseDTO();
+            response.setUsername("SUCCESS");
+
+        }
+
+//        if(isExists) throw new ExistsSignUpRequestException();
         Member member = Member.builder()
                 .username(signUpRequestDTO.getUsername())
                 .password(signUpRequestDTO.getPassword())
