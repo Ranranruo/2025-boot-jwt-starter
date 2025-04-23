@@ -2,7 +2,7 @@ package com.example.demo.Auth.Security;
 
 import com.example.demo.Auth.DTO.SignUpRequestDTO;
 import com.example.demo.Auth.DTO.SignUpResponseDTO;
-import com.example.demo.Lib.ValidationStatus;
+import com.example.demo.Common.Response.ValidationStatus;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -30,45 +30,45 @@ public class AuthValidator {
 
 
         if(username.isBlank()) {
-            signUpResponseDTO.setUsername(ValidationStatus.EMPTY.getMessage());
+            signUpResponseDTO.setUsername(ValidationStatus.EMPTY);
         } else if(username.length() < this.MIN_USERNAME_LENGTH) {
-            signUpResponseDTO.setUsername(ValidationStatus.TOO_SHORT.getMessage());
+            signUpResponseDTO.setUsername(ValidationStatus.TOO_SHORT);
         } else if(username.length() > this.MAX_USERNAME_LENGTH) {
-            signUpResponseDTO.setUsername(ValidationStatus.TOO_LONG.getMessage());
+            signUpResponseDTO.setUsername(ValidationStatus.TOO_LONG);
         } else if (!username.matches(this.USERNAME_REGEX)) {
-            signUpResponseDTO.setUsername(ValidationStatus.INVALID.getMessage());
+            signUpResponseDTO.setUsername(ValidationStatus.INVALID);
         } else {
-            signUpResponseDTO.setUsername(ValidationStatus.SUCCESS.getMessage());
+            signUpResponseDTO.setUsername(ValidationStatus.SUCCESS);
         }
 
         if(displayName.isBlank()) {
-            signUpResponseDTO.setDisplayName(ValidationStatus.EMPTY.getMessage());
+            signUpResponseDTO.setDisplayName(ValidationStatus.EMPTY);
         } else if(displayName.length() < this.MIN_DISPLAY_NAME_LENGTH) {
-            signUpResponseDTO.setDisplayName(ValidationStatus.TOO_SHORT.getMessage());
+            signUpResponseDTO.setDisplayName(ValidationStatus.TOO_SHORT);
         } else if(displayName.length() > this.MAX_DISPLAY_NAME_LENGTH) {
-            signUpResponseDTO.setDisplayName(ValidationStatus.TOO_LONG.getMessage());
+            signUpResponseDTO.setDisplayName(ValidationStatus.TOO_LONG);
         } else if (!displayName.matches(this.DISPLAY_NAME_REGEX)) {
-            signUpResponseDTO.setDisplayName(ValidationStatus.INVALID.getMessage());
+            signUpResponseDTO.setDisplayName(ValidationStatus.INVALID);
         } else {
-            signUpResponseDTO.setDisplayName(ValidationStatus.SUCCESS.getMessage());
+            signUpResponseDTO.setDisplayName(ValidationStatus.SUCCESS);
         }
 
         if(password.isBlank()) {
-            signUpResponseDTO.setPassword(ValidationStatus.EMPTY.getMessage());
+            signUpResponseDTO.setPassword(ValidationStatus.EMPTY);
         } else if(password.length() < this.MIN_PASSWORD_LENGTH) {
-            signUpResponseDTO.setPassword(ValidationStatus.TOO_SHORT.getMessage());
+            signUpResponseDTO.setPassword(ValidationStatus.TOO_SHORT);
         } else if(password.length() > this.MAX_PASSWORD_LENGTH) {
-            signUpResponseDTO.setPassword(ValidationStatus.TOO_LONG.getMessage());
+            signUpResponseDTO.setPassword(ValidationStatus.TOO_LONG);
         } else if (!password.matches(this.PASSWORD_REGEX)) {
-            signUpResponseDTO.setPassword(ValidationStatus.INVALID.getMessage());
+            signUpResponseDTO.setPassword(ValidationStatus.INVALID);
         } else {
-            signUpResponseDTO.setPassword(ValidationStatus.SUCCESS.getMessage());
+            signUpResponseDTO.setPassword(ValidationStatus.SUCCESS);
         }
 
         if(email != null && !email.matches(this.EMAIL_REGEX)) {
-            signUpResponseDTO.setEmail(ValidationStatus.INVALID.getMessage());
+            signUpResponseDTO.setEmail(ValidationStatus.INVALID);
         } else {
-            signUpResponseDTO.setEmail(ValidationStatus.SUCCESS.getMessage());
+            signUpResponseDTO.setEmail(ValidationStatus.SUCCESS);
         }
 
 

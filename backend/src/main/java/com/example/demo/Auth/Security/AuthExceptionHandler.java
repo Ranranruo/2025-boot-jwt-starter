@@ -14,11 +14,11 @@ public class AuthExceptionHandler {
 
     @ExceptionHandler(ExistsSignUpRequestException.class)
     public ResponseEntity<ApiResponse<SignUpResponseDTO>> UsernameNotFoundException(ExistsSignUpRequestException e) {
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiResponse<SignUpResponseDTO>(false, e.getMessage(), e.getResponse()));
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ApiResponse<SignUpResponseDTO>(false, e.getResponseMessage(), e.getResponse()));
     }
 
     @ExceptionHandler(InvalidSignUpRequestException.class)
     public ResponseEntity<ApiResponse<SignUpResponseDTO>> InvalidSignupRequestException(InvalidSignUpRequestException e) {
-        return ResponseEntity.badRequest().body(new ApiResponse<SignUpResponseDTO>(false, e.getMessage(), e.getResponse()));
+        return ResponseEntity.badRequest().body(new ApiResponse<SignUpResponseDTO>(false, e.getResponseMessage(), e.getResponse()));
     }
 }

@@ -1,12 +1,13 @@
 package com.example.demo.Auth;
 
 import com.example.demo.Auth.DTO.SignUpResponseDTO;
-import com.example.demo.Auth.Security.Exception.ExistsSignUpRequestException;
 import com.example.demo.Auth.DTO.SignUpRequestDTO;
+import com.example.demo.Auth.Security.Exception.ExistsSignUpRequestException;
 import com.example.demo.Domain.Member.Member;
 import com.example.demo.Domain.Member.MemberRepository;
 import com.example.demo.Domain.MemberRoleBridge.MemberRoleBridgeRepository;
 import com.example.demo.Domain.Role.RoleRepository;
+import com.example.demo.Common.Response.ValidationStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +24,12 @@ public class AuthService {
 
         if(isUsernameTaken || isEmailTaken) {
             SignUpResponseDTO response = new SignUpResponseDTO();
-            response.setUsername("SUCCESS");
+            response.setUsername(isUsernameTaken ? ValidationStatus.EXISTS : ValidationStatus.SUCCESS);
+            response.setEmail(isEmailTaken ? ValidationStatus.EXISTS : ValidationStatus.SUCCESS);
+            response.setDisplayName(ValidationStatus.SUCCESS);
+            response.setPassword(ValidationStatus.SUCCESS);
 
+            throw new ExistsSignUpRequestException(response);
         }
 
 //        if(isExists) throw new ExistsSignUpRequestException();
