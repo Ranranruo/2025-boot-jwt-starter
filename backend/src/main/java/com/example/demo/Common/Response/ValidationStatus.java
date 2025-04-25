@@ -9,5 +9,5 @@ public enum ValidationStatus {
     EXISTS,
     TOO_SHORT,
     TOO_LONG,
-    INVALID;
+    INVALID,
 }

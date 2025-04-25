@@ -7,5 +7,6 @@ public enum ResponseMessage {
     SUCCESS,
     CREATED,
     INVALID,
+    NOT_FOUND,
     EXISTS;
 }

@@ -11,7 +11,9 @@ import com.example.demo.Domain.Role.Role;
 import com.example.demo.Domain.Role.RoleRepository;
 import com.example.demo.Common.Response.ValidationStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +22,9 @@ public class AuthService {
     private final RoleRepository roleRepository;
     private final MemberRoleBridgeRepository memberRoleBridgeRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
+    @Transactional
     public boolean signUp(SignUpRequestDTO signUpRequestDTO) {
         boolean isUsernameTaken = memberRepository.existsMemberByUsername(signUpRequestDTO.getUsername());
         boolean isEmailTaken = memberRepository.existsMemberByEmail(signUpRequestDTO.getEmail());
@@ -34,9 +39,11 @@ public class AuthService {
             throw new ExistsSignUpRequestException(response);
         }
 
+        String password = passwordEncoder.encode(signUpRequestDTO.getPassword());
+
         Member member = Member.builder()
                 .username(signUpRequestDTO.getUsername())
-                .password(signUpRequestDTO.getPassword())
+                .password(password)
                 .email(null)
                 .displayName(signUpRequestDTO.getDisplayName())
                 .build();
