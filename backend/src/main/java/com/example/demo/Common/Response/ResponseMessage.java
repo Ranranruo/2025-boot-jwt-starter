@@ -8,5 +8,6 @@ public enum ResponseMessage {
     CREATED,
     INVALID,
     NOT_FOUND,
+    UNAUTHORIZED,
     EXISTS;
 }

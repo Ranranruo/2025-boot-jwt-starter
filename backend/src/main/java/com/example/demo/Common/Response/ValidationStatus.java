@@ -4,6 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum ValidationStatus {
+    ERROR,
     SUCCESS,
     EMPTY,
     EXISTS,

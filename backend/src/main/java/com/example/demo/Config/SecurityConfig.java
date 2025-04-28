@@ -1,6 +1,8 @@
 package com.example.demo.Config;
 
 import com.example.demo.Auth.Filter.LoginFilter;
+import com.example.demo.Auth.JWT.JWTProvider;
+import com.example.demo.Auth.Security.AuthValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +20,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
+    private final JWTProvider jwtProvider;
+    private final AuthValidator authValidator;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -26,7 +30,7 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth->auth.requestMatchers("/**").permitAll())
-                .addFilterAt(new LoginFilter(authenticationConfiguration.getAuthenticationManager()), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAt(new LoginFilter(authenticationConfiguration.getAuthenticationManager(), jwtProvider, authValidator), UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
     @Bean

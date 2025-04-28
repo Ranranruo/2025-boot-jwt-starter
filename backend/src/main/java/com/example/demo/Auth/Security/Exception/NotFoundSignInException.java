@@ -10,8 +10,8 @@ import lombok.Getter;
 public class NotFoundSignInException extends RuntimeException implements ApiException {
     private final ResponseMessage responseMessage;
     private final SignInResponseDTO response;
-    public NotFoundSignInException(String message) {
-        super(message);
+    public NotFoundSignInException() {
+        super();
         this.responseMessage = ResponseMessage.NOT_FOUND;
 
         this.response = new SignInResponseDTO();
