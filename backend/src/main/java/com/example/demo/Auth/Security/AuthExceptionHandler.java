@@ -3,6 +3,7 @@ package com.example.demo.Auth.Security;
 import com.example.demo.Auth.DTO.SignInResponseDTO;
 import com.example.demo.Auth.DTO.SignUpResponseDTO;
 import com.example.demo.Auth.Security.Exception.ExistsSignUpRequestException;
+import com.example.demo.Auth.Security.Exception.InvalidSignInRequestException;
 import com.example.demo.Auth.Security.Exception.InvalidSignUpRequestException;
 import com.example.demo.Auth.Security.Exception.NotFoundSignInException;
 import com.example.demo.Lib.ApiResponse;
@@ -28,4 +29,6 @@ public class AuthExceptionHandler {
     public ResponseEntity<ApiResponse<SignInResponseDTO>> handleNotFoundSignInException(NotFoundSignInException e) {
         return ResponseEntity.status(401).body(new ApiResponse<SignInResponseDTO>(false, e.getResponseMessage(), e.getResponse()));
     }
+
+
 }

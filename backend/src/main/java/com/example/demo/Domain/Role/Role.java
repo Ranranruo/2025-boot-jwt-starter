@@ -16,11 +16,9 @@ public class Role {
     @Column(name = "id")
     private Long id;
 
-    @Column(nullable = false, length = 30)
+    @Column(name = "name", nullable = false, length = 30)
     private String name;
 
+    @Column(name = "description")
     private String description;
-
-    @Column(nullable = false)
-    private Boolean flag = false;
 }

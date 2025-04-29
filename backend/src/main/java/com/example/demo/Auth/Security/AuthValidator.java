@@ -22,7 +22,7 @@ public class AuthValidator {
     private final String EMAIL_REGEX = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
 
     private ValidationStatus validateUsername(String username) {
-        if(username.isBlank()) return ValidationStatus.EMPTY;
+        if(username == null || username.isBlank()) return ValidationStatus.EMPTY;
         else if(username.length() < this.MIN_USERNAME_LENGTH) return ValidationStatus.TOO_SHORT;
         else if(username.length() > this.MAX_USERNAME_LENGTH) return ValidationStatus.TOO_LONG;
         else if (!username.matches(this.USERNAME_REGEX)) return ValidationStatus.INVALID;
@@ -30,7 +30,7 @@ public class AuthValidator {
     }
 
     private ValidationStatus validateDisplayName(String displayName) {
-        if(displayName.isBlank()) return ValidationStatus.EMPTY;
+        if(displayName == null || displayName.isBlank()) return ValidationStatus.EMPTY;
         else if(displayName.length() < this.MIN_DISPLAY_NAME_LENGTH) return ValidationStatus.TOO_SHORT;
         else if(displayName.length() > this.MAX_DISPLAY_NAME_LENGTH) return ValidationStatus.TOO_LONG;
         else if (!displayName.matches(this.DISPLAY_NAME_REGEX)) return ValidationStatus.INVALID;
@@ -38,7 +38,7 @@ public class AuthValidator {
     }
 
     private ValidationStatus validatePassword(String password) {
-        if(password.isBlank()) return ValidationStatus.EMPTY;
+        if(password == null || password.isBlank()) return ValidationStatus.EMPTY;
         else if(password.length() < this.MIN_PASSWORD_LENGTH) return ValidationStatus.TOO_SHORT;
         else if(password.length() > this.MAX_PASSWORD_LENGTH) return ValidationStatus.TOO_LONG;
         else if (!password.matches(this.PASSWORD_REGEX)) return ValidationStatus.INVALID;

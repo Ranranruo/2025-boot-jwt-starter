@@ -1,5 +1,6 @@
 package com.example.demo.Config;
 
+import com.example.demo.Auth.Filter.JWTFilter;
 import com.example.demo.Auth.Filter.LoginFilter;
 import com.example.demo.Auth.JWT.JWTProvider;
 import com.example.demo.Auth.Security.AuthValidator;
@@ -30,7 +31,8 @@ public class SecurityConfig {
                 .formLogin(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth->auth.requestMatchers("/**").permitAll())
-                .addFilterAt(new LoginFilter(authenticationConfiguration.getAuthenticationManager(), jwtProvider, authValidator), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAt(new LoginFilter(authenticationConfiguration.getAuthenticationManager(), this.jwtProvider, authValidator), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JWTFilter(this.jwtProvider), LoginFilter.class)
                 .build();
     }
     @Bean
