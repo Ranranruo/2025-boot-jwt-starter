@@ -6,6 +6,7 @@ import com.example.demo.Auth.JWT.JWTProvider;
 import com.example.demo.Auth.Member.MemberDetails;
 import com.example.demo.Auth.Security.AuthValidator;
 import com.example.demo.Auth.Security.Exception.InvalidSignInRequestException;
+import com.example.demo.Common.Redis.RedisService;
 import com.example.demo.Common.Response.ResponseMessage;
 import com.example.demo.Common.Response.ValidationStatus;
 import com.example.demo.Lib.ApiResponse;
@@ -24,19 +25,21 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import java.io.IOException;
 import java.util.Map;
-
+import java.util.UUID;
 
 
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final JWTProvider jwtProvider;
     private final AuthValidator authValidator;
+    private final RedisService redisService;
 
-    public LoginFilter(AuthenticationManager authenticationManager, JWTProvider jwtProvider, AuthValidator authValidator) {
+    public LoginFilter(AuthenticationManager authenticationManager, JWTProvider jwtProvider, AuthValidator authValidator, RedisService redisService) {
         setAuthenticationManager(authenticationManager);
         setFilterProcessesUrl("/sign-in");
 
         this.jwtProvider = jwtProvider;
+        this.redisService = redisService;
         this.authValidator = authValidator;
     }
 
@@ -70,10 +73,15 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         String refreshToken = jwtProvider.generateRefreshToken(member.getUsername());
         String accessToken = jwtProvider.generateAccessToken(member.getUsername(), role);
+        String refreshUUID = UUID.randomUUID().toString();
 
-        Cookie cookie = new Cookie("refresh_token", refreshToken);
+        redisService.set(refreshUUID, refreshToken);
+
+        Cookie cookie = new Cookie("refresh_token", refreshUUID);
         cookie.setHttpOnly(true);
         cookie.setPath("/");
+
+        System.out.println(redisService.get(refreshUUID));
 
         response.addCookie(cookie);
 

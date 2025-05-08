@@ -1,18 +1,27 @@
 package com.example.demo.Auth.Filter;
 
+import com.example.demo.Auth.AuthService;
 import com.example.demo.Auth.JWT.JWTProvider;
+import com.example.demo.Auth.Member.MemberDetails;
+import com.example.demo.Common.Response.ResponseMessage;
+import com.example.demo.Domain.Member.MemberRepository;
+import com.example.demo.Lib.ApiResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.aop.scope.ScopedObject;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Arrays;
 
 public class JWTFilter extends OncePerRequestFilter {
+    private final ObjectMapper objectMapper = new ObjectMapper();
     private final JWTProvider jwtProvider;
+    // private final AuthService authService;
 
     public JWTFilter(JWTProvider jwtProvider) {
         this.jwtProvider = jwtProvider;
@@ -26,6 +35,16 @@ public class JWTFilter extends OncePerRequestFilter {
             return;
         }
         String accessToken = authorization.substring("Bearer ".length());
+
+        if(jwtProvider.isExpired(accessToken)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        String username = jwtProvider.getUsername(accessToken);
+        String role = jwtProvider.getRole(accessToken);
+
+        // MemberDetails memberDetails = new MemberDetails();
 
 
         filterChain.doFilter(request, response);

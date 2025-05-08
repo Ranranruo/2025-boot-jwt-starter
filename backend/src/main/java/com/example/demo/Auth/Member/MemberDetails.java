@@ -20,6 +20,4 @@ public class MemberDetails extends User {
         this.displayName = member.getDisplayName();
         this.email = member.getEmail();
     }
-
-
 }
