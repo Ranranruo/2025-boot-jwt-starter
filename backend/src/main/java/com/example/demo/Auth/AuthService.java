@@ -2,6 +2,7 @@ package com.example.demo.Auth;
 
 import com.example.demo.Auth.DTO.SignUpResponseDTO;
 import com.example.demo.Auth.DTO.SignUpRequestDTO;
+import com.example.demo.Auth.Member.MemberDetails;
 import com.example.demo.Auth.Security.Exception.ExistsSignUpRequestException;
 import com.example.demo.Domain.Member.Member;
 import com.example.demo.Domain.Member.MemberRepository;
@@ -11,9 +12,13 @@ import com.example.demo.Domain.Role.Role;
 import com.example.demo.Domain.Role.RoleRepository;
 import com.example.demo.Common.Response.ValidationStatus;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor

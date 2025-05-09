@@ -3,6 +3,7 @@ package com.example.demo.Auth.Filter;
 import com.example.demo.Auth.AuthService;
 import com.example.demo.Auth.JWT.JWTProvider;
 import com.example.demo.Auth.Member.MemberDetails;
+import com.example.demo.Auth.Member.MemberDetailsService;
 import com.example.demo.Common.Response.ResponseMessage;
 import com.example.demo.Domain.Member.MemberRepository;
 import com.example.demo.Lib.ApiResponse;
@@ -13,6 +14,9 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.aop.scope.ScopedObject;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -21,10 +25,11 @@ import java.util.Arrays;
 public class JWTFilter extends OncePerRequestFilter {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final JWTProvider jwtProvider;
-    // private final AuthService authService;
+    private final MemberDetailsService memberDetailsService;
 
-    public JWTFilter(JWTProvider jwtProvider) {
+    public JWTFilter(JWTProvider jwtProvider, MemberDetailsService memberDetailsService) {
         this.jwtProvider = jwtProvider;
+        this.memberDetailsService = memberDetailsService;
     }
 
     @Override
@@ -44,9 +49,9 @@ public class JWTFilter extends OncePerRequestFilter {
         String username = jwtProvider.getUsername(accessToken);
         String role = jwtProvider.getRole(accessToken);
 
-        // MemberDetails memberDetails = new MemberDetails();
+        UserDetails userDetails = memberDetailsService.loadUserByUsername(username);
 
-
+        SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities()));
         filterChain.doFilter(request, response);
     }
 }

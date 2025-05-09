@@ -1,17 +1,14 @@
 package com.example.demo;
 
-import com.example.demo.Domain.Member.Member;
+import com.example.demo.Auth.Member.MemberDetails;
 import com.example.demo.Domain.Member.MemberRepository;
-import com.example.demo.Domain.Role.Role;
 import com.example.demo.Domain.Role.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,14 +21,13 @@ public class TestController {
     }
 
     @GetMapping("/test")
-    public ResponseEntity<Set<Role>> test1() {
-        Set<Role> roles = roleRepository.findAllByMemberId(1L);
-
-        return ResponseEntity.ok().body(roles);
+    public MemberDetails test1(@AuthenticationPrincipal MemberDetails memberDetails) {
+        return (MemberDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
     @GetMapping("/asd")
     public ResponseEntity<String> asd() {
         return ResponseEntity.ok("asd");
     }
+
 }

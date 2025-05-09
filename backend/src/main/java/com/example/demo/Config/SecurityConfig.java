@@ -1,8 +1,10 @@
 package com.example.demo.Config;
 
+import com.example.demo.Auth.AuthService;
 import com.example.demo.Auth.Filter.JWTFilter;
 import com.example.demo.Auth.Filter.LoginFilter;
 import com.example.demo.Auth.JWT.JWTProvider;
+import com.example.demo.Auth.Member.MemberDetailsService;
 import com.example.demo.Auth.Security.AuthValidator;
 import com.example.demo.Common.Redis.RedisService;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,7 @@ public class SecurityConfig {
     private final JWTProvider jwtProvider;
     private final AuthValidator authValidator;
     private final RedisService redisService;
+    private final MemberDetailsService memberDetailsService;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -34,7 +37,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth->auth.requestMatchers("/**").permitAll())
                 .addFilterAt(new LoginFilter(authenticationConfiguration.getAuthenticationManager(), this.jwtProvider, authValidator, redisService), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(new JWTFilter(this.jwtProvider), LoginFilter.class)
+                .addFilterBefore(new JWTFilter(this.jwtProvider, this.memberDetailsService), LoginFilter.class)
                 .build();
     }
     @Bean
