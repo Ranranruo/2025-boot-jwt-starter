@@ -8,6 +8,8 @@ import com.example.demo.Common.Response.ResponseMessage;
 import com.example.demo.Domain.Member.MemberRepository;
 import com.example.demo.Lib.ApiResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -41,14 +43,16 @@ public class JWTFilter extends OncePerRequestFilter {
         }
         String accessToken = authorization.substring("Bearer ".length());
 
-        if(jwtProvider.isExpired(accessToken)) {
-            filterChain.doFilter(request, response);
+        try {
+            jwtProvider.isExpired(accessToken);
+        } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("application/json;charset=UTF-8");
+            objectMapper.writeValue(response.getWriter(), new ApiResponse<String>(false, ResponseMessage.UNAUTHORIZED, null));
             return;
         }
 
         String username = jwtProvider.getUsername(accessToken);
-        String role = jwtProvider.getRole(accessToken);
-
         UserDetails userDetails = memberDetailsService.loadUserByUsername(username);
 
         SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities()));

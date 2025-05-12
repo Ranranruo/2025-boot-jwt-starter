@@ -69,10 +69,8 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         MemberDetails member = (MemberDetails) auth.getPrincipal();
 
-        String role = member.getAuthorities().iterator().next().getAuthority();
-
         String refreshToken = jwtProvider.generateRefreshToken(member.getUsername());
-        String accessToken = jwtProvider.generateAccessToken(member.getUsername(), role);
+        String accessToken = jwtProvider.generateAccessToken(member.getUsername());
         String refreshUUID = UUID.randomUUID().toString();
 
         redisService.set(refreshUUID, refreshToken);

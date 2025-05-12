@@ -33,19 +33,14 @@ public class JWTProvider {
         return getClaims(token).getSubject();
     }
 
-    public String getRole(String token) {
-        return getClaims(token).get("role").toString();
-    }
-
     public boolean isExpired(String token) {
         return this.getClaims(token).getExpiration().before(new Date());
     }
 
 
-    public String generateAccessToken(String username, String role) {
+    public String generateAccessToken(String username) {
         return Jwts.builder()
                 .setSubject(username)
-                .claim("role", role)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + this.ACCESS_TIMEOUT))
                 .signWith(this.secret, SignatureAlgorithm.HS256)
